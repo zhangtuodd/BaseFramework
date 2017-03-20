@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         vp = (ViewPager) findViewById(R.id.vp);
         vp.setOffscreenPageLimit(4);
         tab.set(vp);
-        pageAdapter = new HomePageAdapter(getSupportFragmentManager(),tab);
+        pageAdapter = new HomePageAdapter(getSupportFragmentManager(),tab,this);
         vp.setAdapter(pageAdapter);
 //        tab.setPicture(0);
         vp.addOnPageChangeListener(pageAdapter.set());
