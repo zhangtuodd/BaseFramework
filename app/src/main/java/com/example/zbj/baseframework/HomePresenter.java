@@ -1,6 +1,7 @@
 package com.example.zbj.baseframework;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.zbj.baseframework.app.RetrofitSingleton;
 import com.example.zbj.baseframework.bean.ZhihuList;
@@ -11,12 +12,11 @@ import com.example.zbj.baseframework.view.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by zbj on 2017/3/16.
@@ -26,6 +26,7 @@ public class HomePresenter implements HomeContract.Presenter {
     private Context context;
     private DateUtils dateUtils = new DateUtils();
     private HomeFragment homeFragment;
+    private List<ZhihuList.Question> mList = new ArrayList<>();
 
     public HomePresenter(Context context, HomeFragment view) {
         view.setPresenter(this);
@@ -40,26 +41,28 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void loadData() {
-        getData(true);
+        getData(true, Calendar.getInstance().getTimeInMillis());
     }
 
     @Override
-    public void getData(boolean flag) {
+    public void getData(boolean flag,long time) {
+        Log.i("tag","-time----"+dateUtils.homeDateFormat(time));
         if (flag) {
             homeFragment.showLoading();
+            mList.clear();
         }
-        long timeInMillis = Calendar.getInstance().getTimeInMillis();
-        String s = dateUtils.homeDateFormat(timeInMillis);
+        final boolean b = flag;
         RetrofitSingleton.getInstance(context)
                 .load(Api.ZHIHU_HISTORY)
                 .create(ZhihuApi.class)
-                .getZhihu(s)
+                .getZhihu(dateUtils.homeDateFormat(time))
                 .enqueue(new Callback<ZhihuList>() {
                     @Override
                     public void onResponse(Call<ZhihuList> call, Response<ZhihuList> response) {
                         ZhihuList body = response.body();
-                        ArrayList<ZhihuList.Question> stories = body.getStories();
-                        homeFragment.showResult(stories);
+                        List<ZhihuList.Question> stories = body.getStories();
+                        mList.addAll(stories);
+                        homeFragment.showResult(mList);
                         homeFragment.stopLoading();
                     }
 
@@ -74,7 +77,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void loadMore() {
-        getData(false);
+    public void loadMore(long time) {
+        getData(false,time);
     }
 }

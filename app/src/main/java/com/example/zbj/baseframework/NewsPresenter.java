@@ -26,4 +26,9 @@ public class NewsPresenter implements NewsContract.Presenter {
     public void loadMore() {
 
     }
+
+    @Override
+    public void getData() {
+
+    }
 }

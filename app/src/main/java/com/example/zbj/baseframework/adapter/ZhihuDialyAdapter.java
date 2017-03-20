@@ -23,26 +23,42 @@ import java.util.List;
 public class ZhihuDialyAdapter extends RecyclerView.Adapter {
     private Context context;
     private List list;
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_FOOTER = 1;
 
-    public ZhihuDialyAdapter(Context context, ArrayList<ZhihuList.Question> list) {
+    public ZhihuDialyAdapter(Context context, List<ZhihuList.Question> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_home_item, parent, false);
-        return new MyVierHolder(view);
+        if (viewType == TYPE_NORMAL) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_home_item, parent, false);
+            return new NormalVierHolder(view);
+        }else{
+            View view  =LayoutInflater.from(context).inflate(R.layout.layout_home_footer,parent,false);
+            return new FooterViewHodler(view);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == list.size() - 1) {
+            return TYPE_FOOTER;
+        } else {
+            return TYPE_NORMAL;
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof MyVierHolder) {
+        if (holder instanceof NormalVierHolder) {
             ZhihuList.Question item = (ZhihuList.Question) list.get(position);
             String imgUrl = item.getImages().get(0);
-            if(imgUrl == null){
-              ((MyVierHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
-            }else{
+            if (imgUrl == null) {
+                ((NormalVierHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+            } else {
                 Glide.with(context)
                         .load(imgUrl)
                         .asBitmap()
@@ -50,9 +66,9 @@ public class ZhihuDialyAdapter extends RecyclerView.Adapter {
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .error(R.mipmap.ic_launcher)
                         .centerCrop()
-                        .into(((MyVierHolder)holder).imageView);
+                        .into(((NormalVierHolder) holder).imageView);
             }
-            ((MyVierHolder) holder).textView.setText(item.getTitle());
+            ((NormalVierHolder) holder).textView.setText(item.getTitle());
 
 
         }
@@ -64,11 +80,11 @@ public class ZhihuDialyAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    public class MyVierHolder extends RecyclerView.ViewHolder {
+    public class NormalVierHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView textView;
 
-        public MyVierHolder(View itemView) {
+        public NormalVierHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageViewCover);
             textView = (TextView) itemView.findViewById(R.id.textViewTitle);
@@ -79,6 +95,13 @@ public class ZhihuDialyAdapter extends RecyclerView.Adapter {
 //                }
 //            });
 
+        }
+    }
+
+    public class FooterViewHodler extends RecyclerView.ViewHolder{
+
+        public FooterViewHodler(View itemView) {
+            super(itemView);
         }
     }
 }

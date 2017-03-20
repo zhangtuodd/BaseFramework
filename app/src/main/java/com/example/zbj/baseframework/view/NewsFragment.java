@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.zbj.baseframework.NewsContract;
+
 /**
  * Created by zbj on 2017/3/9.
  */
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements NewsContract.View{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -29,5 +31,35 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void initView(View view) {
+
+    }
+
+    @Override
+    public void setPresenter(Object presenter) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showResult() {
+
     }
 }
