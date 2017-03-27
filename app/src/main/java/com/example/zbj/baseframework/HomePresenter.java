@@ -45,7 +45,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getData(boolean flag,long time) {
+    public void getData(final boolean flag, long time) {
         Log.i("tag","-time----"+dateUtils.homeDateFormat(time));
         if (flag) {
             homeFragment.showLoading();
@@ -61,6 +61,9 @@ public class HomePresenter implements HomeContract.Presenter {
                     public void onResponse(Call<ZhihuList> call, Response<ZhihuList> response) {
                         ZhihuList body = response.body();
                         List<ZhihuList.Question> stories = body.getStories();
+                        if (flag){
+                            mList.clear();
+                        }
                         mList.addAll(stories);
                         homeFragment.showResult(mList);
                         homeFragment.stopLoading();
@@ -68,8 +71,10 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     @Override
                     public void onFailure(Call<ZhihuList> call, Throwable t) {
+                        homeFragment.DOWN_ERROR_FLAF = true;
                         homeFragment.stopLoading();
                         homeFragment.showError();
+
                     }
                 });
 
