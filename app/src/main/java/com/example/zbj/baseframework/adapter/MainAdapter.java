@@ -21,7 +21,7 @@ import com.example.zbj.baseframework.view.PersonFragment;
  * Created by zbj on 2017/3/9.
  */
 
-public class HomePageAdapter extends FragmentPagerAdapter {
+public class MainAdapter extends FragmentPagerAdapter {
     Fragment homeFragment = null;
     Fragment imFragment = null;
     Fragment newsFragment = null;
@@ -33,7 +33,7 @@ public class HomePageAdapter extends FragmentPagerAdapter {
     NewsPresenter newsPresenter;
     ViewPager vp = null;
 
-    public HomePageAdapter(FragmentManager fm, BottomLayout tab, MainActivity mainActivity) {
+    public MainAdapter(FragmentManager fm, BottomLayout tab, MainActivity mainActivity) {
         super(fm);
         this.bottomLayout = tab;
         this.context = mainActivity;

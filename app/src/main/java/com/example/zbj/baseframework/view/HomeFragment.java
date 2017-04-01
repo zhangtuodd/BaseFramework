@@ -9,14 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.zbj.baseframework.HomeContract;
 import com.example.zbj.baseframework.R;
-import com.example.zbj.baseframework.adapter.ZhihuDialyAdapter;
+import com.example.zbj.baseframework.adapter.HomeFrgAdapter;
 import com.example.zbj.baseframework.bean.ZhihuList;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private ArrayList<ZhihuList.Question> mList = new ArrayList<>();
-    public ZhihuDialyAdapter adapter;
+    public HomeFrgAdapter adapter;
     private boolean ScrollDirection;
     private int mYear = Calendar.getInstance().get(Calendar.YEAR);
     private int mMonth = Calendar.getInstance().get(Calendar.MONTH);
@@ -181,7 +180,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void showResult(List<ZhihuList.Question> list) {
         if(adapter == null){
             Log.i("tag","adapter == null");
-            adapter = new ZhihuDialyAdapter(getContext(), list);
+            adapter = new HomeFrgAdapter(getContext(), list);
             recyclerView.setAdapter(adapter);
         }else{
             Log.i("tag","adapter != null");

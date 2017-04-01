@@ -20,13 +20,13 @@ import java.util.List;
  * Created by zbj on 2017/3/16.
  */
 
-public class ZhihuDialyAdapter extends RecyclerView.Adapter {
+public class HomeFrgAdapter extends RecyclerView.Adapter {
     private Context context;
     private List list;
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_FOOTER = 1;
 
-    public ZhihuDialyAdapter(Context context, List<ZhihuList.Question> list) {
+    public HomeFrgAdapter(Context context, List<ZhihuList.Question> list) {
         this.context = context;
         this.list = list;
     }
