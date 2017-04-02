@@ -49,7 +49,6 @@ public class HomePresenter implements HomeContract.Presenter {
         Log.i("tag","-time----"+dateUtils.homeDateFormat(time));
         if (flag) {
             homeFragment.showLoading();
-            mList.clear();
         }
         final boolean b = flag;
         RetrofitSingleton.getInstance(context)
